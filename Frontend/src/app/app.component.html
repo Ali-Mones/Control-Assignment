@@ -1,0 +1,12 @@
+<app-top-menu 
+(addQEvent)="canvas.addQ()" 
+(addMEvent)="canvas.addM()"
+(removeEvent)="canvas.removePart()" 
+(addLinkEvent)="canvas.addLink()" 
+(unlinkEvent)="canvas.unlink()"
+(startSimulationEvent)="canvas.startSimulation()"
+(resetSimulationEvent)="canvas.reset()"
+(inputChange)="canvas.input = $event"
+(replayEvent)="canvas.initReplay()" #menu></app-top-menu>
+<app-canvas
+(remaining)="menu.remainingProducts = $event" #canvas></app-canvas>

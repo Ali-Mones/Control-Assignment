@@ -1,0 +1,30 @@
+<div>
+    <button (click)="addQEvent.emit()">
+        add Q
+    </button>
+    <button (click)="addMEvent.emit()">
+        add M
+    </button>
+    <button (click)="removeEvent.emit()">
+        remove
+    </button>
+    <button (click)="addLinkEvent.emit()">
+        add link
+    </button>
+    <button (click)="unlinkEvent.emit()">
+        unlink
+    </button>
+    <button (click)="startSimulationEvent.emit()">
+        start simulation
+    </button>
+    <button (click)="resetSimulationEvent.emit()">
+        reset
+    </button>
+    <button (click)="replayEvent.emit()">
+        replay
+    </button>
+    <input [placeholder]="'Input Count'" (change)="setInput($event)" type="number">
+    <div *ngIf="remainingProducts" id="remining-products">
+        Remaining Products: {{ remainingProducts }}
+    </div>
+</div>
