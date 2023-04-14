@@ -1,5 +1,5 @@
 import { CanvasComponent } from "../canvas/canvas.component";
-import { Part } from "../Classes/part";
+import { Node } from "../Classes/Node";
 import { NormalState } from "./NormalState";
 import { State } from "./State";
 
@@ -7,7 +7,7 @@ export class MoveState extends State {
 
     constructor(
         canvas: CanvasComponent,
-        private part: Part,
+        private node: Node,
         private oldMouseX: number,
         private oldMouseY: number
     ) { super(canvas); }
@@ -20,9 +20,9 @@ export class MoveState extends State {
         let diffX = e.x - this.oldMouseX;
         let diffY = e.y - 52 - this.oldMouseY;
 
-        if (this.part) {
-            this.part.x += diffX;
-            this.part.y += diffY;
+        if (this.node) {
+            this.node.x += diffX;
+            this.node.y += diffY;
         }
 
         this.oldMouseX = e.x;

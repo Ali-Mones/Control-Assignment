@@ -8,21 +8,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class TopMenuComponent {
   
   @Output()
-  addQEvent: EventEmitter<void> = new EventEmitter();
-  @Output()
-  addMEvent: EventEmitter<void> = new EventEmitter();
+  addNodeEvent: EventEmitter<void> = new EventEmitter();
+
   @Output()
   removeEvent: EventEmitter<void> = new EventEmitter();
+  
   @Output()
-  addLinkEvent: EventEmitter<void> = new EventEmitter();
+  addLinkEvent: EventEmitter<boolean> = new EventEmitter();
+  
   @Output()
   unlinkEvent: EventEmitter<void> = new EventEmitter();
-  @Output()
-  startSimulationEvent: EventEmitter<void> = new EventEmitter();
-  @Output()
-  resetSimulationEvent: EventEmitter<void> = new EventEmitter();
-  @Output()
-  replayEvent: EventEmitter<void> = new EventEmitter();
+  
   @Output()
   inputChange: EventEmitter<number> = new EventEmitter();
 

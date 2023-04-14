@@ -1,21 +1,20 @@
-import { Part } from "../Classes/part";
+import { Node } from "../Classes/Node";
 import { NormalState } from "./NormalState";
 import { State } from "./State";
 
 export class UnlinkState extends State {
 
-    private first!: Part;
-    private second!: Part;
+    private first!: Node;
+    private second!: Node;
 
     mouseUp(e: MouseEvent): void {
-        this.canvas.parts.forEach((part) => {
-            if (part.isMouseInside(e.x, e.y - 52)) {
+        this.canvas.nodes.forEach((node) => {
+            if (node.isMouseInside(e.x, e.y - 52)) {
                 if (!this.first) {
-                    this.first = part;
+                    this.first = node;
                 }
                 else {
-                    this.second = part;
-                    console.log(this.first, this.second);
+                    this.second = node;
                     this.first.unlink(this.second);
                     this.second.unlink(this.first);
                     this.canvas.update();
