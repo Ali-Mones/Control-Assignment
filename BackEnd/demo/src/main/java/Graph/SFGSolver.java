@@ -15,7 +15,6 @@ public class SFGSolver {
     private double Delta;
     private double result;
 
-
     public SFGSolver(List < List < Pair > > adj){
         this.adj = adj;
         PLAY();
