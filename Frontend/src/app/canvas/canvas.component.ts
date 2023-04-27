@@ -19,6 +19,7 @@ export class CanvasComponent implements OnInit {
   nodes: Node[] = [];
   id: number = 0;
   state: State = new NormalState(this);
+  showResults: boolean = false;
   
   constructor(
     private backend: BackendCommunicatorService
@@ -38,12 +39,18 @@ export class CanvasComponent implements OnInit {
     this.nodes.forEach((part) => {
       part.update(this.ctx);
     });
+
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 255)';
+    this.ctx.font = "50px serif";
+    this.ctx.fillText("Signal Flow Graph", window.innerWidth / 2 - 25, 50);
   }
 
   addNode() {
     let node: Node = new Node(520, 520, this.id++);
-    this.nodes.push(node);
-    this.update();
+    if (this.nodes.length < 12) {
+      this.nodes.push(node);
+      this.update();
+    }
   }
 
   removePart() {

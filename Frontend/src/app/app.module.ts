@@ -5,21 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CanvasComponent } from './canvas/canvas.component';
 import { TopMenuComponent } from './top-menu/top-menu.component';
+import { SignalFlowGraphResultsComponent } from './signal-flow-graph-results/signal-flow-graph-results.component';
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     CanvasComponent,
-    TopMenuComponent
+    TopMenuComponent,
+    SignalFlowGraphResultsComponent,
   ],
-  imports: [
-    BrowserModule, 
-    AppRoutingModule,
-    HttpClientModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
-  bootstrap: [
-    AppComponent
-  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
