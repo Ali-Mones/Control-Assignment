@@ -3,8 +3,8 @@ import { State } from "./State";
 
 export class NormalState extends State {
 
-    mouseUp(e: MouseEvent): void {
-    }
+    mouseUp(e: MouseEvent): void {}
+
     mouseDown(e: MouseEvent): void {
         this.canvas.nodes.forEach((node) => {
             if (node.isMouseInside(e.x, e.y - 52)) {
@@ -12,7 +12,6 @@ export class NormalState extends State {
             }
         });
     }
-    mouseMove(e: MouseEvent): void {
-    }
-    
+
+    mouseMove(e: MouseEvent): void {}
 }

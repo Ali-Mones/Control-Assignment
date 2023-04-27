@@ -17,13 +17,8 @@ export class CanvasComponent implements OnInit {
   canvas!: ElementRef<HTMLCanvasElement>;
   ctx!: CanvasRenderingContext2D;
   nodes: Node[] = [];
-  qID: number = 0;
-  mID: number = 0;
+  id: number = 0;
   state: State = new NormalState(this);
-  input: number = 0;
-  @Output()
-  remaining: EventEmitter<number> = new EventEmitter();
-
   
   constructor(
     private backend: BackendCommunicatorService
@@ -45,17 +40,8 @@ export class CanvasComponent implements OnInit {
     });
   }
 
-  reset() {
-    this.nodes = [];
-    this.qID = 0;
-    this.mID = 0;
-    this.state = new NormalState(this);
-    this.input = 0;
-    this.update();
-  }
-
   addNode() {
-    let node: Node = new Node(520, 520, this.mID++);
+    let node: Node = new Node(520, 520, this.id++);
     this.nodes.push(node);
     this.update();
   }

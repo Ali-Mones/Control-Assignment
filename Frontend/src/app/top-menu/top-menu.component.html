@@ -14,11 +14,5 @@
     <button (click)="unlinkEvent.emit()">
         Unlink
     </button>
-
-    <input [placeholder]="'Input Count'" (change)="setInput($event)" type="number">
-
-    <div *ngIf="remainingProducts" id="remining-products">
-        Remaining Products: {{ remainingProducts }}
-    </div>
     
 </div>

@@ -1,10 +1,7 @@
 <app-top-menu 
 (addNodeEvent)="canvas.addNode()"
-(removeEvent)="canvas.removePart()" 
-(addLinkEvent)="canvas.addLink($event)" 
-(unlinkEvent)="canvas.unlink()"
-(resetSimulationEvent)="canvas.reset()"
-(inputChange)="canvas.input = $event" #menu></app-top-menu>
+(removeEvent)="canvas.removePart()"
+(addLinkEvent)="canvas.addLink($event)"
+(unlinkEvent)="canvas.unlink()"></app-top-menu>
 
-<app-canvas
-(remaining)="menu.remainingProducts = $event" #canvas></app-canvas>
+<app-canvas #canvas></app-canvas>
