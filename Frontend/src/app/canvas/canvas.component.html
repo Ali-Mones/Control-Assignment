@@ -1,1 +1,7 @@
-<canvas #canvas></canvas>
+<div id="container">
+    <canvas #canvas></canvas>
+    <app-signal-flow-graph-results *ngIf="showResults"
+    (closeWindowEvent)="showResults = false"
+    id="overlay"></app-signal-flow-graph-results>
+</div>
+

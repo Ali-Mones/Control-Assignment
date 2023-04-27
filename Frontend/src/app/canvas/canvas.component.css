@@ -1,0 +1,13 @@
+#container {
+    position: relative;
+    display: flex;
+}
+
+#container canvas, #overlay {
+    position: absolute;
+}
+
+#overlay {
+    margin-top: 100px;
+    margin-left: 500px;
+}

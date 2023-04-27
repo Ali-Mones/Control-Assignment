@@ -18,4 +18,7 @@ export class TopMenuComponent {
   
   @Output()
   unlinkEvent: EventEmitter<void> = new EventEmitter();
+
+  @Output()
+  showResultsEvent: EventEmitter<void> = new EventEmitter();
 }
