@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BackendCommunicatorService } from '../Services/backend-communicator.service';
 import { Node } from '../Classes/Node';
 import { LinkState } from '../States/LinkState';
@@ -17,7 +17,6 @@ export class CanvasComponent implements OnInit {
   canvas!: ElementRef<HTMLCanvasElement>;
   ctx!: CanvasRenderingContext2D;
   nodes: Node[] = [];
-  id: number = 0;
   state: State = new NormalState(this);
   showResults: boolean = false;
   
@@ -46,10 +45,27 @@ export class CanvasComponent implements OnInit {
   }
 
   addNode() {
-    let node: Node = new Node(520, 520, this.id++);
+    let id = 0;
+    this.nodes.every((node, index) => {
+      if (node.id == index) {
+        id++;
+        return true;
+      }
+      else
+        return false;
+    });
+
     if (this.nodes.length < 12) {
+      let node: Node = new Node(520, 520, id);
       this.nodes.push(node);
+      this.nodes.sort((a, b) => {
+        return a.id - b.id;
+      });
       this.update();
+    }
+    else {
+      this.ctx.fillStyle = 'rgba(200, 0, 0, 255)'
+      this.ctx.fillText("Too many nodes: can't have more than 12 nodes", window.innerWidth / 2 - 25, 100);
     }
   }
 
