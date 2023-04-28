@@ -3,6 +3,7 @@
 (removeEvent)="canvas.removePart()"
 (addLinkEvent)="canvas.addLink($event)"
 (unlinkEvent)="canvas.unlink()"
-(showResultsEvent)="canvas.showResults = true"></app-top-menu>
+(showResultsEvent)="canvas.showResults()"
+(routhEvent)="canvas.routhState()"></app-top-menu>
 
 <app-canvas #canvas></app-canvas>

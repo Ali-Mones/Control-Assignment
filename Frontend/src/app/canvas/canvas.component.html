@@ -1,7 +1,12 @@
 <div id="container">
     <canvas #canvas></canvas>
-    <app-signal-flow-graph-results *ngIf="showResults"
-    (closeWindowEvent)="showResults = false"
+
+    <app-signal-flow-graph-results *ngIf="results"
+    (closeResultsEvent)="results = false"
     id="overlay"></app-signal-flow-graph-results>
+
+    <app-routh-hurwitz *ngIf="routh"
+    (closeRouthEvent)="routh = false"
+    id="overlay"></app-routh-hurwitz>
 </div>
 

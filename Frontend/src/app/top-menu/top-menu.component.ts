@@ -21,4 +21,7 @@ export class TopMenuComponent {
 
   @Output()
   showResultsEvent: EventEmitter<void> = new EventEmitter();
+
+  @Output()
+  routhEvent: EventEmitter<void> = new EventEmitter();
 }

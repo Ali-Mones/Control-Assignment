@@ -14,7 +14,8 @@ export class UnlinkState extends State {
         })[0];
 
         if (!node) {
-            this.first.colour = 'rgba(125, 125, 125, 255)';
+            if (this.first)
+                this.first.colour = 'rgba(125, 125, 125, 255)';
             this.canvas.update();
             this.canvas.state = new NormalState(this.canvas);
             return;
@@ -23,10 +24,12 @@ export class UnlinkState extends State {
         if (!this.first) {
             this.first = node;
             this.first.colour = 'rgba(0, 200, 120, 255)';
+            this.canvas.update();
         } else {
             this.second = node;
             this.first.unlink(this.second);
             this.second.unlink(this.first);
+            this.first.colour = 'rgba(125, 125, 125, 255)';
             this.canvas.update();
             this.canvas.state = new NormalState(this.canvas);
         }

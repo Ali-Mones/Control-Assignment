@@ -1,0 +1,41 @@
+<div id="container">
+
+    
+    <div style="margin-top: 10px; text-decoration: underline; font-weight: bolder; font-size: xx-large; margin-inline: auto;">
+        Routh-Hurwitz Stability Criterion
+    </div>
+
+    <br>
+    <br>
+
+    <div style="margin-left: 25px;">
+        Enter the characteristic equation:
+        <br>
+        <input type="text" style="width: 24rem; font-size: 20px;" [(ngModel)]="equation">
+        <br>
+        <button (click)="getResults()">
+            Check Stability
+        </button>
+    </div>
+    
+    <div style="margin-left: 25px; margin-top: 20px;" *ngIf="RHS_Poles">
+        <h2 style="margin-bottom: 10px;">
+            Results:
+        </h2>
+        System is {{ RHS_Poles.length > 0 ? 'stable' : 'unstable' }} with {{ RHS_Poles.length }} poles in the RHS of s-plane.
+
+        <div *ngIf="RHS_Poles.length > 0">
+            <br>
+            Their values are:
+            <li *ngFor="let pole of RHS_Poles" style="margin-left: 10px;">
+                {{ pole }}
+            </li>
+        </div>
+
+    </div>
+        
+<button (click)="closeRouthEvent.emit()" id="close">
+        Close
+    </button>
+        
+    </div>

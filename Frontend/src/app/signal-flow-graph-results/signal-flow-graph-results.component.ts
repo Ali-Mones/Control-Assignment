@@ -15,5 +15,5 @@ export class SignalFlowGraphResultsComponent {
   transferFunction: number = 100;
 
   @Output()
-  closeWindowEvent = new EventEmitter<void>();
+  closeResultsEvent = new EventEmitter<void>();
 }

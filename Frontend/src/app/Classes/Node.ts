@@ -5,11 +5,10 @@ export class Node {
     y!: number;
     radius: number = 40;
     colour: string = 'rgba(125, 125, 125, 255)';
-    next: Node[] = [];
-    gain: number[] = [];
+    next: {node: Node, gain: number, arc: boolean}[] = [];
 
-    line: Node[] = [];
-    arc: Node[] = [];
+    // line: Node[] = [];
+    // arc: Node[] = [];
 
     constructor(x: number, y: number, id: number) {
         this.x = x;
@@ -37,38 +36,53 @@ export class Node {
         return (mouseX - this.x) * (mouseX - this.x) + (mouseY - this.y) * (mouseY - this.y) <= this.radius * this.radius;
     }
 
-    addNext(next: Node) {
-        if (next != this && !this.next.includes(next))
-            this.next.push(next);
+    addNext(next: Node, gain: number, arc: boolean) {
+        let exists = this.next.filter((obj) => {
+            return obj.node == next;
+        })[0];
+
+        if (next != this && !exists)
+            this.next.push({node: next, gain: gain, arc: arc});
     }
 
     unlink(node: Node) {
-        if (this.next.includes(node))
-            this.next.splice(this.next.indexOf(node), 1);
+        let exists = this.next.filter((obj) => {
+            return obj.node == node;
+        })[0];
 
-        if (this.arc.includes(node))
-            this.arc.splice(this.arc.indexOf(node), 1);
+        if (exists)
+            this.next.splice(this.next.indexOf(exists), 1);
 
-        if (this.line.includes(node))
-            this.line.splice(this.line.indexOf(node), 1);
+        // if (this.arc.includes(node))
+        //     this.arc.splice(this.arc.indexOf(node), 1);
+
+        // if (this.line.includes(node))
+        //     this.line.splice(this.line.indexOf(node), 1);
+
+        // let gain = this.gain.filter((gainObj) => {
+        //     return gainObj.node.id == node.id;
+        // })[0];
+
+        // if (gain)
+        //     this.gain.splice(this.gain.indexOf(gain), 1);
     }
 
     private renderArrows(ctx: CanvasRenderingContext2D) {
-        this.arc.forEach((node, index) => {
-            if ((this.id + index) % 2 == 0)
-                this.drawArc(ctx, node, false);
+        this.next.forEach((obj, index) => {
+            if (obj.arc) {
+                if ((this.id + index) % 2 == 0)
+                    this.drawArc(ctx, obj, false);
+                else
+                    this.drawArc(ctx, obj, true);
+            }
             else
-                this.drawArc(ctx, node, true);
-        });
-
-        this.line.forEach((node) => {
-            this.drawLine(ctx, node);
+                this.drawLine(ctx, obj);
         });
     }
 
-    private drawArc(ctx: CanvasRenderingContext2D, to: Node, up: boolean) {
-        let tox = to.x;
-        let toy = to.y;
+    private drawArc(ctx: CanvasRenderingContext2D, to: {node: Node, gain: number, arc: boolean}, up: boolean) {
+        let tox = to.node.x;
+        let toy = to.node.y;
 
         let angle = Math.atan2(toy - this.y, tox - this.x);
 
@@ -90,14 +104,13 @@ export class Node {
             ctx.bezierCurveTo(this.x, starty + 200, tox, toy + 200, tox, toy);
         ctx.stroke();
         
-        let index: number = this.next.indexOf(to);
-        let gain = this.gain[index];
+        ctx.font = '15px Arial';
 
         let headlen = 10;
         ctx.beginPath();
 
         if (up) {
-            ctx.fillText(gain.toString(), (this.x + tox) * 0.5, (starty + toy) * 0.5 - 0.75 * 200 - 20);
+            ctx.fillText(to.gain.toString(), (this.x + tox) * 0.5, (starty + toy) * 0.5 - 0.75 * 200 - 20);
 
             ctx.moveTo((this.x + tox) * 0.5, (starty + toy) * 0.5 - 0.75 * 200);
             ctx.lineTo((this.x + tox) * 0.5 - headlen * Math.cos(angle - Math.PI / 7), (starty + toy) * 0.5 - 0.75 * 200 - headlen * Math.sin(angle - Math.PI / 7));
@@ -106,7 +119,7 @@ export class Node {
             ctx.lineTo((this.x + tox) * 0.5 - headlen * Math.cos(angle - Math.PI / 7), (starty + toy) * 0.5 - 0.75 * 200 - headlen * Math.sin(angle - Math.PI / 7));
         }
         else {
-            ctx.fillText(gain.toString(), (this.x + tox) * 0.5, (starty + toy) * 0.5 + 0.75 * 200 + 20);
+            ctx.fillText(to.gain.toString(), (this.x + tox) * 0.5, (starty + toy) * 0.5 + 0.75 * 200 + 20);
 
             ctx.moveTo((this.x + tox) * 0.5, (starty + toy) * 0.5 + 0.75 * 200);
             ctx.lineTo((this.x + tox) * 0.5 - headlen * Math.cos(angle - Math.PI / 7), (starty + toy) * 0.5 + 0.75 * 200 - headlen * Math.sin(angle - Math.PI / 7));
@@ -118,21 +131,20 @@ export class Node {
         ctx.restore();
     }
 
-    private drawLine(ctx: CanvasRenderingContext2D, to: Node) {
+    private drawLine(ctx: CanvasRenderingContext2D, to: {node: Node, gain: number, arc: boolean}) {
         //variables to be used when creating the arrow
         let headlen = 10;
-        let angle = Math.atan2(to.y - this.y, to.x - this.x);
+        let angle = Math.atan2(to.node.y - this.y, to.node.x - this.x);
 
         let startX: number = this.x + 50 * Math.cos(angle);
         let startY: number = this.y + 50 * Math.sin(angle);
         
-        let tox = to.x - 55 * Math.cos(angle);
-        let toy = to.y - 55 * Math.sin(angle);
+        let tox = to.node.x - 55 * Math.cos(angle);
+        let toy = to.node.y - 55 * Math.sin(angle);
         
-        let index: number = this.next.indexOf(to);
-        let gain = this.gain[index];
 
-        ctx.fillText(gain.toString(), (this.x + tox) * 0.5, (this.y + toy) * 0.5 - 20);
+        ctx.font = '15px Arial';
+        ctx.fillText(to.gain.toString(), (this.x + tox) * 0.5, (this.y + toy) * 0.5 - 20);
 
         ctx.save();
         ctx.strokeStyle = 'rgba(0, 0, 0, 255)';
