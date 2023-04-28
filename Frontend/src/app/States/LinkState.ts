@@ -24,7 +24,8 @@ export class LinkState extends State {
         })[0];
 
         if (!node) {
-            this.from.colour = 'rgba(125, 125, 125, 255)';
+            if (this.from)
+                this.from.colour = 'rgba(125, 125, 125, 255)';
             this.canvas.update();
             this.canvas.state = new NormalState(this.canvas);
             return;
@@ -45,19 +46,27 @@ export class LinkState extends State {
                 this.canvas.state = new NormalState(this.canvas);
                 return;
             }
+
+            let exists = this.from.next.filter((obj) => {
+                return obj.node == this.to;
+            })[0];
             
-            if (this.arc && !this.from.next.includes(this.to))
-                this.from.arc.push(this.to);
-            else if (!this.from.next.includes(this.to))
-                this.from.line.push(this.to);
-            this.from.addNext(this.to);
+            if (!exists)
+                this.from.addNext(this.to, parseInt(gain), this.arc);
             
             
-            this.from.gain.push(parseFloat(gain));
+            // this.from.arc.push(this.to);
+            // else if (!this.from.next.includes(this.to))
+            //     this.from.line.push(this.to);
+            // this.from.gain.push({node: this.from, gain: parseFloat(gain)});
+            
+            
             this.from.colour = 'rgba(125, 125, 125, 255)';
             this.canvas.update();
             this.canvas.state = new NormalState(this.canvas);
         }
+
+        console.log(this.canvas.nodes);
     }
     
     mouseDown(e: MouseEvent): void {}

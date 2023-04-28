@@ -18,7 +18,8 @@ export class CanvasComponent implements OnInit {
   ctx!: CanvasRenderingContext2D;
   nodes: Node[] = [];
   state: State = new NormalState(this);
-  showResults: boolean = false;
+  results: boolean = false;
+  routh: boolean = false;
   
   constructor(
     private backend: BackendCommunicatorService
@@ -39,12 +40,17 @@ export class CanvasComponent implements OnInit {
       part.update(this.ctx);
     });
 
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 255)';
-    this.ctx.font = "50px serif";
-    this.ctx.fillText("Signal Flow Graph", window.innerWidth / 2 - 25, 50);
+    if (!this.routh) {
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 255)';
+      this.ctx.font = "50px serif";
+      this.ctx.fillText("Signal Flow Graph", window.innerWidth / 2 - 25, 50);
+    }
   }
 
   addNode() {
+    if(this.routh)
+      return;
+
     let id = 0;
     this.nodes.every((node, index) => {
       if (node.id == index) {
@@ -70,14 +76,55 @@ export class CanvasComponent implements OnInit {
   }
 
   removePart() {
+    if(this.routh)
+      return;
+
     this.state = new RemoveState(this);
   }
 
   addLink(arc: boolean) {
+    if(this.routh)
+      return;
+
     this.state = new LinkState(this, arc);
   }
 
   unlink() {
+    if(this.routh)
+      return;
+
     this.state = new UnlinkState(this);
+  }
+
+  showResults() {
+    if(this.routh)
+      return;
+
+    this.sendGraph();
+    this.results = true;
+  }
+
+  routhState() {
+    this.results = false;
+    this.routh = true;
+    this.update();
+  }
+
+  sendGraph() {
+    let graph: number[][] = [];
+    let weights: number[][] = [];
+    this.nodes.forEach((obj, index) => {
+      graph.push([]);
+      weights.push([]);
+
+      obj.next.forEach((next) => {
+        graph[index].push(next.node.id);
+        weights[index].push(next.gain);
+      });
+
+    });
+
+    console.log("graph", graph);
+    console.log("weights", weights);
   }
 }
