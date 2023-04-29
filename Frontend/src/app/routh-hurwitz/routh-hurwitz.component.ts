@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { BackendCommunicatorService } from '../Services/backend-communicator.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-routh-hurwitz',
@@ -19,7 +20,9 @@ export class RouthHurwitzComponent {
   closeRouthEvent = new EventEmitter<void>();
 
   getResults() {
-    
+    this.backend.DoRouths(this.equation).pipe(take(1)).subscribe((poles) => {
+      this.RHS_Poles = poles;
+    });
   }
 
 }
