@@ -1,11 +1,13 @@
 package com.example.demo;
 
 import Graph.Pair;
+import Graph.RouthSolver;
 import Graph.SFGSolver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class BackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BackEndApplication.class, args);
 
+		/*
 		List <List<Pair>> adj = new ArrayList<>();
 		for (int i = 0 ; i < 7 ; i++) adj.add(new ArrayList<>());
 		adj.get(1).add(new Pair(2 , 1));
@@ -52,7 +55,22 @@ public class BackEndApplication {
 //			}
 //			System.out.println();
 //			System.out.println("Gain: " + gains.get(i));
-//		}
-	}
+    	}
 
+		 */
+		/*
+    for(int i=0;i<COFF.length;i++){
+        for(int j=0;j<sz;j++){
+            System.out.print(RouthsArray[i][j] + "  ");
+        }
+        System.out.println();
+    }
+ 	*/
+		String s = "s^5+s^4+10s^3+72s^2+152s+240";
+		String[] terms = RouthSolver.splitEquations(s);
+
+		int[] Coffecients = RouthSolver.cofficientsExtractor(terms);
+		//System.out.println(Arrays.toString(COFF));
+		System.out.println(RouthSolver.getPolesCount(Coffecients));
+	}
 }
