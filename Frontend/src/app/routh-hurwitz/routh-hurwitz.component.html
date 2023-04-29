@@ -18,24 +18,17 @@
         </button>
     </div>
     
-    <div style="margin-left: 25px; margin-top: 20px;" *ngIf="RHS_Poles">
+    <div style="margin-left: 25px; margin-top: 20px;" *ngIf="RHS_Poles != null">
         <h2 style="margin-bottom: 10px;">
             Results:
         </h2>
-        System is {{ RHS_Poles.length > 0 ? 'stable' : 'unstable' }} with {{ RHS_Poles.length }} poles in the RHS of s-plane.
-
-        <div *ngIf="RHS_Poles.length > 0">
-            <br>
-            Their values are:
-            <li *ngFor="let pole of RHS_Poles" style="margin-left: 10px;">
-                {{ pole }}
-            </li>
-        </div>
-
+        For characterisitc equation {{ equation }}
+        <br>
+        System is {{ RHS_Poles > 0 ? 'unstable' : 'stable' }} with {{ RHS_Poles }} poles in the RHS of s-plane.
     </div>
         
-<button (click)="closeRouthEvent.emit()" id="close">
+    <button (click)="closeRouthEvent.emit()" id="close">
         Close
     </button>
         
-    </div>
+</div>

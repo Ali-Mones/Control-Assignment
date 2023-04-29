@@ -75,7 +75,7 @@ public class RouthSolver {
     }
 
     static public int getPolesCount(int COFF[]){
-        int sz = Math.round(COFF.length/2);
+        int sz = (int)Math.ceil((double)COFF.length/2);
 
         int RouthsArray[][] = new int[COFF.length][sz];
 

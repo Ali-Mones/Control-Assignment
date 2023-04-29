@@ -66,11 +66,11 @@ public class BackEndApplication {
         System.out.println();
     }
  	*/
-		String s = "s^5+s^4+10s^3+72s^2+152s+240";
-		String[] terms = RouthSolver.splitEquations(s);
+		// String s = "s^5+s^4+10s^3+72s^2+152s+240";
+		// String[] terms = RouthSolver.splitEquations(s);
 
-		int[] Coffecients = RouthSolver.cofficientsExtractor(terms);
-		//System.out.println(Arrays.toString(COFF));
-		System.out.println(RouthSolver.getPolesCount(Coffecients));
+		// int[] Coffecients = RouthSolver.cofficientsExtractor(terms);
+		// //System.out.println(Arrays.toString(COFF));
+		// System.out.println(RouthSolver.getPolesCount(Coffecients));
 	}
 }

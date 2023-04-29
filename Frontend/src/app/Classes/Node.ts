@@ -7,9 +7,6 @@ export class Node {
     colour: string = 'rgba(125, 125, 125, 255)';
     next: {node: Node, gain: number, arc: boolean}[] = [];
 
-    // line: Node[] = [];
-    // arc: Node[] = [];
-
     constructor(x: number, y: number, id: number) {
         this.x = x;
         this.y = y;
@@ -52,19 +49,6 @@ export class Node {
 
         if (exists)
             this.next.splice(this.next.indexOf(exists), 1);
-
-        // if (this.arc.includes(node))
-        //     this.arc.splice(this.arc.indexOf(node), 1);
-
-        // if (this.line.includes(node))
-        //     this.line.splice(this.line.indexOf(node), 1);
-
-        // let gain = this.gain.filter((gainObj) => {
-        //     return gainObj.node.id == node.id;
-        // })[0];
-
-        // if (gain)
-        //     this.gain.splice(this.gain.indexOf(gain), 1);
     }
 
     private renderArrows(ctx: CanvasRenderingContext2D) {
