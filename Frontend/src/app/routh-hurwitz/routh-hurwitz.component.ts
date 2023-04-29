@@ -13,7 +13,7 @@ export class RouthHurwitzComponent {
   ) {}
 
   equation: string = "";
-  RHS_Poles: number[] | null = null;
+  RHS_Poles: number | null = null;
 
   @Output()
   closeRouthEvent = new EventEmitter<void>();
