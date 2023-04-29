@@ -6,6 +6,7 @@ import { NormalState } from '../States/NormalState';
 import { State } from '../States/State';
 import { UnlinkState } from '../States/UnlinkState';
 import { RemoveState } from '../States/RemoveState';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-canvas',
@@ -111,20 +112,17 @@ export class CanvasComponent implements OnInit {
   }
 
   sendGraph() {
-    let graph: number[][] = [];
-    let weights: number[][] = [];
+    let graph: {F: number, S: number}[][] = [];
     this.nodes.forEach((obj, index) => {
       graph.push([]);
-      weights.push([]);
 
       obj.next.forEach((next) => {
-        graph[index].push(next.node.id);
-        weights[index].push(next.gain);
+        graph[index].push({F: next.node.id, S: next.gain});
       });
-
     });
 
-    console.log("graph", graph);
-    console.log("weights", weights);
+    console.log(JSON.stringify(graph));
+
+    this.backend.DoMason(JSON.stringify(graph)).pipe(take(1)).subscribe();
   }
 }
