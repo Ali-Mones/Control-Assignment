@@ -134,7 +134,7 @@ export class Node {
         ctx.strokeStyle = 'rgba(0, 0, 0, 255)';
 
         //starting path of the arrow from the start square to the end square
-        //and drawing the stroke
+        //and drawing the stroke..
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         ctx.lineTo(tox, toy);
