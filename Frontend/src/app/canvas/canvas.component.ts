@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
 import { BackendCommunicatorService } from '../Services/backend-communicator.service';
 import { Node } from '../Classes/Node';
 import { LinkState } from '../States/LinkState';
@@ -7,6 +7,7 @@ import { State } from '../States/State';
 import { UnlinkState } from '../States/UnlinkState';
 import { RemoveState } from '../States/RemoveState';
 import { take } from 'rxjs';
+import { SignalFlowGraphResultsComponent } from '../signal-flow-graph-results/signal-flow-graph-results.component';
 
 @Component({
   selector: 'app-canvas',
@@ -21,6 +22,12 @@ export class CanvasComponent implements OnInit {
   state: State = new NormalState(this);
   results: boolean = false;
   routh: boolean = false;
+
+  @Input()
+  resultsEvent = new EventEmitter<string[][]>();
+
+  @ViewChild('signal', { static: false })
+  signal!: SignalFlowGraphResultsComponent;
   
   constructor(
     private backend: BackendCommunicatorService
@@ -52,9 +59,9 @@ export class CanvasComponent implements OnInit {
     if(this.routh)
       return;
 
-    let id = 0;
+    let id = 1;
     this.nodes.every((node, index) => {
-      if (node.id == index) {
+      if (node.id == index + 1) {
         id++;
         return true;
       }
@@ -121,8 +128,21 @@ export class CanvasComponent implements OnInit {
       });
     });
 
-    console.log(JSON.stringify(graph));
+    if (graph.length == 0)
+      return;
 
-    this.backend.DoMason(JSON.stringify(graph)).pipe(take(1)).subscribe();
+    this.backend.DoMason(JSON.stringify(graph)).pipe(take(1)).subscribe((result) => {
+      this.resultsEvent.emit(result);
+      console.log(result);
+      for (let fwdPath of result[0]) {
+        let split = fwdPath.split('-G');
+        this.signal.forwardPaths.push({path: split[0], gain: 'G' + split[1]});
+      }
+      for (let indivLoop of result[1]) {
+        let split = indivLoop.split('-G');
+        this.signal.individualLoops.push({loop: split[0], gain: 'G' + split[1]});
+      }
+      this.signal.delta.push(result[2][0]);
+    });
   }
 }
