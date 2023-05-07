@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-signal-flow-graph-results',
@@ -7,12 +7,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class SignalFlowGraphResultsComponent {
 
-  forwardPaths: string[] = ["help", "me", "pls"];
-  individualLoops: string[] = ["wow", "much", "loops"];
-  nonTouchingLoops: string[] = ["loop1", "loop2"];
-  delta: number = 0;
-  deltas: number[] = [1, 2, 3, 4, 5];
-  transferFunction: number = 100;
+  @Input()
+  results: string[][] = [];
+
+  forwardPaths: {path: string, gain: string}[] = [];
+  individualLoops: {loop:string, gain: string}[] = [];
+  deltas: string[] = [];
+  transferFunction: string[] = [];
 
   @Output()
   closeResultsEvent = new EventEmitter<void>();
