@@ -16,6 +16,6 @@ export class BackendCommunicatorService {
   }
 
   DoMason(graph: string) {
-    return this.http.post("http://localhost:8080/signalflow", null, {params: new HttpParams().set('graph', graph)});
+    return this.http.post<string[][]>("http://localhost:8080/signalflow", null, {params: new HttpParams().set('graph', graph)});
   }
 }
