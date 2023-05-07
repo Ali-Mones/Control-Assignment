@@ -8,7 +8,7 @@
         <div id="results-list">
             Forward Paths:
         </div>
-        <div *ngFor="let path of forwardPaths; index as i">
+        <div *ngFor="let path of forwardPaths; index as i" style="font-size: medium;">
             {{ path.path }}
             <br>
             {{ path.gain }}
@@ -19,7 +19,7 @@
         <div id="results-list">
             Individual loops:
         </div>
-        <div *ngFor="let loop of individualLoops; index as i">
+        <div *ngFor="let loop of individualLoops; index as i" style="font-size: medium;">
             {{ loop.loop }}
             <br>
             {{ loop.gain }}
@@ -30,7 +30,7 @@
         <div id="results-list">
             Deltas:
         </div>
-        <div *ngFor="let d of deltas; index as i">
+        <div *ngFor="let d of deltas; index as i" style="font-size: medium;">
             {{ d }}
         </div>
         
@@ -39,7 +39,7 @@
         <div id="results-list">
             Transfer Function:
         </div>
-        <div>
+        <div style="font-size: medium;">
             {{ transferFunction[0] }}
         </div>
     </div>

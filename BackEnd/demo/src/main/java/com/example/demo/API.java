@@ -49,7 +49,6 @@ public class API {
         var sol = solver.getResult();
         ArrayList < ArrayList< String >> arrayList = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        // stringBuilder.append("Forward Paths:\n");
         ArrayList< String > forwardPaths = new ArrayList<>();
         for (int i = 0 ; i < fPaths.size() ; i++){
             stringBuilder = new StringBuilder();
@@ -59,7 +58,6 @@ public class API {
             forwardPaths.add(stringBuilder.toString());
         }
         arrayList.add(forwardPaths);
-        // stringBuilder.append("Loops:\n");
         ArrayList< String > loopsArray = new ArrayList<>();
         for (int i = 0 ; i < loops.size() ; i++){
             stringBuilder = new StringBuilder();
@@ -69,14 +67,10 @@ public class API {
         }
         arrayList.add(loopsArray);
         stringBuilder = new StringBuilder();
-        // stringBuilder.append("Result:\n");
         ArrayList< String > deltaArrayList = new ArrayList<>();
         stringBuilder.append("Y(s) / R(s) = ").append(num).append(" / ").append(delta).append(" = ").append(sol);
         deltaArrayList.add(stringBuilder.toString());
         arrayList.add(deltaArrayList);
-
-        stringBuilder = new StringBuilder();
-        ArrayList< String > deltasArray = new ArrayList<>();
         return arrayList;
     }
 
@@ -87,6 +81,5 @@ public class API {
             if(j != lists.get(i).size() - 1) stringBuilder.append(" -> ");
         }
         stringBuilder.append("-Gain #").append(i + 1).append(": ").append(list.get(i));
-        // if(i != lists.size() - 1) stringBuilder.append("\n\n");
     }
 }
