@@ -136,13 +136,15 @@ export class CanvasComponent implements OnInit {
       console.log(result);
       for (let fwdPath of result[0]) {
         let split = fwdPath.split('-G');
-        this.signal.forwardPaths.push({path: split[0], gain: 'G' + split[1]});
+        let split2 = split[1].split('-D');
+        this.signal.forwardPaths.push({path: split[0], gain: 'G' + split2[0]});
+        this.signal.deltas.push('D' + split2[1]);
       }
       for (let indivLoop of result[1]) {
         let split = indivLoop.split('-G');
         this.signal.individualLoops.push({loop: split[0], gain: 'G' + split[1]});
       }
-      this.signal.delta.push(result[2][0]);
+      this.signal.transferFunction.push(result[2][0]);
     });
   }
 }

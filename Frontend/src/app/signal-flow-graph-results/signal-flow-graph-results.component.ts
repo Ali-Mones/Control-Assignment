@@ -12,8 +12,6 @@ export class SignalFlowGraphResultsComponent {
 
   forwardPaths: {path: string, gain: string}[] = [];
   individualLoops: {loop:string, gain: string}[] = [];
-  nonTouchingLoops: {loop:string, gain: string}[] = [];
-  delta: string[] = [];
   deltas: string[] = [];
   transferFunction: string[] = [];
 

@@ -28,19 +28,19 @@
 
     <div id="second-container">
         <div id="results-list">
-            Delta:
-        </div>
-        <div>
-            {{ delta[0] }}
-        </div>
-    
-        <br>
-    
-        <div id="results-list">
             Deltas:
         </div>
         <div *ngFor="let d of deltas; index as i">
             {{ d }}
+        </div>
+        
+        <br>
+        
+        <div id="results-list">
+            Transfer Function:
+        </div>
+        <div>
+            {{ transferFunction[0] }}
         </div>
     </div>
     

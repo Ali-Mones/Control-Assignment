@@ -55,6 +55,7 @@ public class API {
             stringBuilder = new StringBuilder();
             stringBuilder.append("Path #").append(i + 1).append(": ");
             getString(fPaths, fPathsGains, stringBuilder, i);
+            stringBuilder.append("-Delta #" ).append(i + 1).append(": ").append(deltaArray.get(i)).append("\n");
             forwardPaths.add(stringBuilder.toString());
         }
         arrayList.add(forwardPaths);
