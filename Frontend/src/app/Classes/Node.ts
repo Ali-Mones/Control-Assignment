@@ -38,7 +38,7 @@ export class Node {
             return obj.node == next;
         })[0];
 
-        if (next != this && !exists)
+        if (!exists && arc)
             this.next.push({node: next, gain: gain, arc: arc});
     }
 
@@ -55,9 +55,9 @@ export class Node {
         this.next.forEach((obj, index) => {
             if (obj.arc) {
                 if ((this.id + index) % 2 == 0)
-                    this.drawArc(ctx, obj, false);
-                else
                     this.drawArc(ctx, obj, true);
+                else
+                    this.drawArc(ctx, obj, false);
             }
             else
                 this.drawLine(ctx, obj);
