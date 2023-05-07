@@ -34,7 +34,7 @@ public class API {
          Pair[][] pairs = gson.fromJson(graph, Pair[][].class);
 
          List<List<Pair>> adj = new ArrayList<>();
-
+         adj.add(new ArrayList<>());
          for (var l : pairs) {
              adj.add(List.of(l));
          }
@@ -44,6 +44,7 @@ public class API {
          var fPathsGains = solver.getForwardPathsGains();
          var loops = solver.getLoops();
          var loopsGains = solver.getLoopGains();
+         var deltaArray = solver.getDeltaArray();
          var num = solver.getNumerator();
          var delta = solver.getDelta();
          var sol = solver.getResult();
@@ -53,6 +54,8 @@ public class API {
          for (int i = 0 ; i < fPaths.size() ; i++){
              stringBuilder.append("   Path #").append(i + 1).append(": ");
              getString(fPaths, fPathsGains, stringBuilder, i);
+             stringBuilder.append("   Delta #" ).append(i + 1).append(": ").append(deltaArray.get(i)).append("\n");
+             if(i != fPaths.size() - 1) stringBuilder.append("\n");
          }
          arrayList.add(stringBuilder.toString());
          stringBuilder = new StringBuilder();
@@ -60,6 +63,7 @@ public class API {
          for (int i = 0 ; i < loops.size() ; i++){
              stringBuilder.append("   Loop #").append(i + 1).append(": ");
              getString(loops, loopsGains, stringBuilder, i);
+             if(i != loops.size() - 1) stringBuilder.append("\n");
          }
          arrayList.add(stringBuilder.toString());
          stringBuilder = new StringBuilder();
@@ -75,7 +79,6 @@ public class API {
             stringBuilder.append(x);
             if(j != lists.get(i).size() - 1) stringBuilder.append(" -> ");
         }
-        stringBuilder.append("\n   Gain #").append(i + 1).append(": ").append(list.get(i));
-        if(i != lists.size() - 1) stringBuilder.append("\n\n");
+        stringBuilder.append("\n   Gain #").append(i + 1).append(": ").append(list.get(i)).append("\n");
     }
 }
