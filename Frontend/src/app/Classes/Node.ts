@@ -38,7 +38,7 @@ export class Node {
             return obj.node == next;
         })[0];
 
-        if (next != this && !exists)
+        if (!exists && arc)
             this.next.push({node: next, gain: gain, arc: arc});
     }
 
