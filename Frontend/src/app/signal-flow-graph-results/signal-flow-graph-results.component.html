@@ -9,7 +9,9 @@
             Forward Paths:
         </div>
         <div *ngFor="let path of forwardPaths; index as i">
-            {{ i + 1 }} - {{ path }}
+            {{ path.path }}
+            <br>
+            {{ path.gain }}
         </div>
     
         <br>    
@@ -18,38 +20,28 @@
             Individual loops:
         </div>
         <div *ngFor="let loop of individualLoops; index as i">
-            {{ i + 1 }} - {{ loop }}
-        </div>
-    
-        <br>
-    
-        <div id="results-list">
-            Non-touching loops:
-        </div>
-        <div *ngFor="let loop of nonTouchingLoops; index as i">
-            {{ i + 1 }} - {{ loop }}
+            {{ loop.loop }}
+            <br>
+            {{ loop.gain }}
         </div>
     </div>
 
     <div id="second-container">
-        <div style="display: inline-flex;">
-            <div id="results-list">
-                Delta:
-            </div>
-            <div>
-                &nbsp;&nbsp;{{ delta }}
-            </div>
-        </div>
-    
-        <br>
-    
         <div id="results-list">
             Deltas:
         </div>
         <div *ngFor="let d of deltas; index as i">
-            {{ i + 1 }} - {{ d }}
+            {{ d }}
+        </div>
+        
+        <br>
+        
+        <div id="results-list">
+            Transfer Function:
+        </div>
+        <div>
+            {{ transferFunction[0] }}
         </div>
     </div>
-
-
+    
 </div>

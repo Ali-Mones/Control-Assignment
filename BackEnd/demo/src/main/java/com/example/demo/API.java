@@ -18,8 +18,6 @@ import com.google.gson.Gson;
 @CrossOrigin
 public class API {
 
-
-
     @PostMapping("/rouths")
     public int DoRouths(@RequestParam String Equation){
         String[] terms = RouthSolver.splitEquations(Equation);
@@ -28,50 +26,59 @@ public class API {
         return RouthSolver.getPolesCount(Coefficients);
     }
 
-     @PostMapping("/signalflow")
-     public ArrayList < String > DoMason(@RequestParam String graph) {
-         Gson gson = new Gson();
-         Pair[][] pairs = gson.fromJson(graph, Pair[][].class);
+    @PostMapping("/signalflow")
+    public ArrayList < ArrayList < String > > DoMason(@RequestParam String graph) {
+        Gson gson = new Gson();
+        Pair[][] pairs = gson.fromJson(graph, Pair[][].class);
 
-         List<List<Pair>> adj = new ArrayList<>();
-         adj.add(new ArrayList<>());
-         for (var l : pairs) {
-             adj.add(List.of(l));
-         }
+        List<List<Pair>> adj = new ArrayList<>();
+        adj.add(new ArrayList<>());
 
-         SFGSolver solver = new SFGSolver(adj);
-         var fPaths = solver.getForwardPaths();
-         var fPathsGains = solver.getForwardPathsGains();
-         var loops = solver.getLoops();
-         var loopsGains = solver.getLoopGains();
-         var deltaArray = solver.getDeltaArray();
-         var num = solver.getNumerator();
-         var delta = solver.getDelta();
-         var sol = solver.getResult();
-         ArrayList < String > arrayList = new ArrayList<>();
-         StringBuilder stringBuilder = new StringBuilder();
-         stringBuilder.append("Forward Paths:\n");
-         for (int i = 0 ; i < fPaths.size() ; i++){
-             stringBuilder.append("   Path #").append(i + 1).append(": ");
-             getString(fPaths, fPathsGains, stringBuilder, i);
-             stringBuilder.append("   Delta #" ).append(i + 1).append(": ").append(deltaArray.get(i)).append("\n");
-             if(i != fPaths.size() - 1) stringBuilder.append("\n");
-         }
-         arrayList.add(stringBuilder.toString());
-         stringBuilder = new StringBuilder();
-         stringBuilder.append("Loops:\n");
-         for (int i = 0 ; i < loops.size() ; i++){
-             stringBuilder.append("   Loop #").append(i + 1).append(": ");
-             getString(loops, loopsGains, stringBuilder, i);
-             if(i != loops.size() - 1) stringBuilder.append("\n");
-         }
-         arrayList.add(stringBuilder.toString());
-         stringBuilder = new StringBuilder();
-         stringBuilder.append("Result:\n");
-         stringBuilder.append("   Y(s) / R(s) = ").append(num).append(" / ").append(delta).append(" = ").append(sol);
-         arrayList.add(stringBuilder.toString());
-         return arrayList;
-     }
+        for (var l : pairs) {
+            adj.add(List.of(l));
+        }
+
+        SFGSolver solver = new SFGSolver(adj);
+        var fPaths = solver.getForwardPaths();
+        var fPathsGains = solver.getForwardPathsGains();
+        var loops = solver.getLoops();
+        var loopsGains = solver.getLoopGains();
+        var deltaArray = solver.getDeltaArray();
+        var num = solver.getNumerator();
+        var delta = solver.getDelta();
+        var sol = solver.getResult();
+        ArrayList < ArrayList< String >> arrayList = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+        // stringBuilder.append("Forward Paths:\n");
+        ArrayList< String > forwardPaths = new ArrayList<>();
+        for (int i = 0 ; i < fPaths.size() ; i++){
+            stringBuilder = new StringBuilder();
+            stringBuilder.append("Path #").append(i + 1).append(": ");
+            getString(fPaths, fPathsGains, stringBuilder, i);
+            stringBuilder.append("-Delta #" ).append(i + 1).append(": ").append(deltaArray.get(i)).append("\n");
+            forwardPaths.add(stringBuilder.toString());
+        }
+        arrayList.add(forwardPaths);
+        // stringBuilder.append("Loops:\n");
+        ArrayList< String > loopsArray = new ArrayList<>();
+        for (int i = 0 ; i < loops.size() ; i++){
+            stringBuilder = new StringBuilder();
+            stringBuilder.append("Loop #").append(i + 1).append(": ");
+            getString(loops, loopsGains, stringBuilder, i);
+            loopsArray.add(stringBuilder.toString());
+        }
+        arrayList.add(loopsArray);
+        stringBuilder = new StringBuilder();
+        // stringBuilder.append("Result:\n");
+        ArrayList< String > deltaArrayList = new ArrayList<>();
+        stringBuilder.append("Y(s) / R(s) = ").append(num).append(" / ").append(delta).append(" = ").append(sol);
+        deltaArrayList.add(stringBuilder.toString());
+        arrayList.add(deltaArrayList);
+
+        stringBuilder = new StringBuilder();
+        ArrayList< String > deltasArray = new ArrayList<>();
+        return arrayList;
+    }
 
     private static void getString(List<List<Integer>> lists, List<Integer> list, StringBuilder stringBuilder, int i) {
         for (int j = 0 ; j < lists.get(i).size() ; j++){
@@ -79,6 +86,7 @@ public class API {
             stringBuilder.append(x);
             if(j != lists.get(i).size() - 1) stringBuilder.append(" -> ");
         }
-        stringBuilder.append("\n   Gain #").append(i + 1).append(": ").append(list.get(i)).append("\n");
+        stringBuilder.append("-Gain #").append(i + 1).append(": ").append(list.get(i));
+        // if(i != lists.size() - 1) stringBuilder.append("\n\n");
     }
 }
