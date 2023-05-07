@@ -38,7 +38,7 @@ export class Node {
             return obj.node == next;
         })[0];
 
-        if (!exists && arc)
+        if (next != this && !exists)
             this.next.push({node: next, gain: gain, arc: arc});
     }
 
@@ -55,9 +55,9 @@ export class Node {
         this.next.forEach((obj, index) => {
             if (obj.arc) {
                 if ((this.id + index) % 2 == 0)
-                    this.drawArc(ctx, obj, true);
-                else
                     this.drawArc(ctx, obj, false);
+                else
+                    this.drawArc(ctx, obj, true);
             }
             else
                 this.drawLine(ctx, obj);
@@ -134,7 +134,7 @@ export class Node {
         ctx.strokeStyle = 'rgba(0, 0, 0, 255)';
 
         //starting path of the arrow from the start square to the end square
-        //and drawing the stroke....
+        //and drawing the stroke
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         ctx.lineTo(tox, toy);
