@@ -43,6 +43,7 @@ public class API {
         var fPathsGains = solver.getForwardPathsGains();
         var loops = solver.getLoops();
         var loopsGains = solver.getLoopGains();
+        var deltaArray = solver.getDeltaArray();
         var num = solver.getNumerator();
         var delta = solver.getDelta();
         var sol = solver.getResult();
@@ -68,10 +69,10 @@ public class API {
         arrayList.add(loopsArray);
         stringBuilder = new StringBuilder();
         // stringBuilder.append("Result:\n");
-        ArrayList< String > deltaArray = new ArrayList<>();
+        ArrayList< String > deltaArrayList = new ArrayList<>();
         stringBuilder.append("Y(s) / R(s) = ").append(num).append(" / ").append(delta).append(" = ").append(sol);
-        deltaArray.add(stringBuilder.toString());
-        arrayList.add(deltaArray);
+        deltaArrayList.add(stringBuilder.toString());
+        arrayList.add(deltaArrayList);
 
         stringBuilder = new StringBuilder();
         ArrayList< String > deltasArray = new ArrayList<>();

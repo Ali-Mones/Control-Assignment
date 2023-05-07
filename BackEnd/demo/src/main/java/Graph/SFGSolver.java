@@ -214,4 +214,8 @@ public class SFGSolver {
     public void setResult(double result) {
         this.result = result;
     }
+
+    public List < Integer > getDeltaArray(){
+        return delta;
+    }
 }
