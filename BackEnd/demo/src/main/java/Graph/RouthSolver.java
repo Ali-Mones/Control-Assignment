@@ -4,6 +4,7 @@ import java.util.Vector;
 
 public class RouthSolver {
 
+    final static float EPSILION = (float) 0.000000000001;
     static public int[] cofficientsExtractor(String[] TermsArray) {
 
         int sPos = TermsArray[0].indexOf("s");
@@ -106,8 +107,16 @@ public class RouthSolver {
                     if(power < 0)power = 0;
                 }
             }else{
-                RouthsArray[i][0] = (float) 0.0000001;
+                if(RouthsArray[i][0] == 0)
+                    RouthsArray[i][0] = EPSILION;
             }
+        }
+
+        for(int i=0;i<COFF.length;i++) {
+            for (int j = 0; j < sz; j++) {
+                System.out.print(RouthsArray[i][j] + "    ");
+            }
+            System.out.println();
         }
 
         int numOfPoles = 0;
